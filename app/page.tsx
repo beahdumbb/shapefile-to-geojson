@@ -3,14 +3,12 @@
 import { useState, useCallback, useRef } from "react";
 import proj4 from "proj4";
 
-// 🌐 한국 주요 좌표계 엔진 세팅 (이 사이트의 최고 무기입니다)
 proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs"); 
 proj4.defs("EPSG:5179", "+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"); 
 proj4.defs("EPSG:5174", "+proj=tmerc +lat_0=38 +lon_0=127.0028902777778 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +towgs84=-115.80,474.99,674.11,1.16,-2.31,-1.63,6.43 +units=m +no_defs"); 
 proj4.defs("EPSG:5181", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"); 
 proj4.defs("EPSG:5186", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"); 
 
-// 재귀적으로 GeoJSON 좌표들을 추적해 변환해 주는 마법의 함수
 function transformCoordinates(coords: any, fromCRS: string, toCRS = "EPSG:4326"): any {
   if (typeof coords[0] === "number") {
     return proj4(fromCRS, toCRS, [coords[0], coords[1]]);
@@ -51,7 +49,7 @@ export default function Home() {
       return;
     }
 
-    const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+    const MAX_FILE_SIZE = 100 * 1024 * 1024;
     if (file.size > MAX_FILE_SIZE) {
       setErrorMsg("File is too large. Please upload files under 100MB.");
       setStatus("error");
@@ -81,12 +79,12 @@ export default function Home() {
       const shapefile = await import("shapefile");
       const source    = await shapefile.open(shpBuffer, dbfBuffer, { encoding: "euc-kr" });
 
-      const features: GeoJSON.Feature[] = [];
+      const features: any[] = [];
       let result = await source.read();
       
       while (!result.done) {
         if (result.value) {
-          const feature = result.value as GeoJSON.Feature;
+          const feature = result.value as any;
           
           if (sourceCrs !== "EPSG:4326" && feature.geometry && feature.geometry.coordinates) {
              feature.geometry.coordinates = transformCoordinates(feature.geometry.coordinates, sourceCrs, "EPSG:4326");
@@ -97,7 +95,7 @@ export default function Home() {
         result = await source.read();
       }
 
-      const geojson: GeoJSON.FeatureCollection = {
+      const geojson: any = {
         type:     "FeatureCollection",
         features,
       };
@@ -183,7 +181,6 @@ export default function Home() {
                 <p className="text-[#8b949e] text-sm mb-6">(.shp, .dbf 포함 필수)</p>
               </div>
               
-              {/* ✨ V2 핵심: 좌표계 선택 드롭다운 ✨ */}
               <div className="flex items-center gap-3 bg-[#0d1117] border border-[#30363d] px-4 py-2 rounded-lg" onClick={(e) => e.stopPropagation()}>
                 <span className="text-xs font-semibold text-[#8b949e]">원본 좌표계 :</span>
                 <select 
