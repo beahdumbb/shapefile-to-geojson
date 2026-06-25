@@ -184,16 +184,16 @@ export default function Home() {
               <div className="flex items-center gap-3 bg-[#0d1117] border border-[#30363d] px-4 py-2 rounded-lg" onClick={(e) => e.stopPropagation()}>
                 <span className="text-xs font-semibold text-[#8b949e]">원본 좌표계 :</span>
                 <select 
-                  className="bg-transparent text-sm font-medium text-[#58a6ff] outline-none cursor-pointer"
-                  value={sourceCrs}
-                  onChange={(e) => setSourceCrs(e.target.value)}
-                >
-                  <option value="EPSG:4326">EPSG:4326 (글로벌 표준 / 변환안함)</option>
-                  <option value="EPSG:5179">EPSG:5179 (UTM-K, 네이버/카카오/최신공공)</option>
-                  <option value="EPSG:5186">EPSG:5186 (중부원점, 2010년 이후)</option>
-                  <option value="EPSG:5181">EPSG:5181 (중부원점, 2010년 이전)</option>
-                  <option value="EPSG:5174">EPSG:5174 (구 지적도 / 구 한국측지계)</option>
-                </select>
+  className="bg-transparent text-sm font-medium text-[#58a6ff] outline-none cursor-pointer w-full max-w-[200px] truncate"
+  value={sourceCrs}
+  onChange={(e) => setSourceCrs(e.target.value)}
+>
+  <option value="EPSG:4326">EPSG:4326 (글로벌 표준)</option>
+  <option value="EPSG:5179">EPSG:5179 (UTM-K, 네이버/카카오)</option>
+  <option value="EPSG:5186">EPSG:5186 (중부원점, 2010년 이후)</option>
+  <option value="EPSG:5181">EPSG:5181 (중부원점, 2010년 이전)</option>
+  <option value="EPSG:5174">EPSG:5174 (구 지적도)</option>
+</select>
               </div>
             </>
           )}
