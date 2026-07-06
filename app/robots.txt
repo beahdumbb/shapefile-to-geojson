@@ -1,0 +1,4 @@
+Plaintext
+User-agent: *
+Allow: /
+Sitemap: https://www.geoconvert.net/sitemap.xml
