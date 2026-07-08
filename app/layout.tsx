@@ -14,6 +14,7 @@ export const metadata = {
     other: {
       "naver-site-verification": "e50da0c55e436fa719a469f05e8bc19d",
     },
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
