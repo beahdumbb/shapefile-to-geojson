@@ -1,4 +1,3 @@
-cat > app/layout.tsx << 'EOF'
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -46,4 +45,3 @@ export default function RootLayout({
     </html>
   );
 }
-EOF
